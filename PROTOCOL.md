@@ -1,191 +1,246 @@
-AIon Technology — Real-Time Iterative Audio Feedback System (RT‑IAFS)
-Technical Protocol Specification
+Spatial Grid Referencing Protocol (SGR)
+AIon Technology — Multimodal Interaction Standard, Phase 1
 1. Introduction
-The Real-Time Iterative Audio Feedback System (RT‑IAFS) is a lightweight, multimodal interaction protocol designed to enable rapid, low‑cost refinement of AI‑generated audio through natural‑language feedback.
-Unlike traditional systems that regenerate full audio tracks for every modification, RT‑IAFS uses short previews (“time‑lapses”) and parameter‑based iteration to achieve high precision with minimal compute.
+The Spatial Grid Referencing Protocol (SGR) is the foundational layer of AIon Technology’s multimodal interaction standard.
+It establishes a universal spatial language that allows humans and AI systems to communicate precise, deterministic editing intent inside any image.
 
-This document describes the technical structure, flow, and components of the protocol.
+SGR is model‑agnostic, provider‑agnostic, and future‑proof.
+It does not replace AI models — it gives them structure.
 
-2. System Architecture
-2.1 Components
-User  
-Provides auditory evaluation and natural‑language corrections.
+This protocol is Phase 1 of AIon Technology’s multimodal standard.
+Phase 2 extends the same principles to audio.
+Phase 3 extends them to video.
 
-Language Model (LM)  
-Interprets user instructions and corrections.
-Generates and updates parameter sets.
+2. Purpose of the Protocol
+SGR solves the core limitation of modern AI image systems:
 
-Orchestrator  
-Core logic engine.
-Manages iteration cycles, parameter updates, and communication between modules.
+AI models cannot reliably edit specific regions of an image.
 
-Audio Preview Generator  
-Produces short 5–15 second previews based on parameters.
-Does not generate full tracks until final approval.
+They regenerate entire images, misinterpret instructions, and produce inconsistent results.
 
-Final Renderer  
-Generates the complete audio track only after the user approves the preview.
+SGR introduces:
 
-3. Interaction Flow
-Step 1 — User Input
-The user provides an initial description, e.g.:
+deterministic regional control
 
-“I want a calm ambient track with soft pads and slow progression.”
+explicit spatial intent
 
-Step 2 — LM Parameter Generation
-The language model converts the description into a structured parameter set:
+predictable editing behavior
+
+minimal compute waste
+
+universal compatibility
+
+This transforms image editing from guesswork into engineering.
+
+3. Core Concepts
+3.1 Universal Grid
+SGR overlays a grid on any image, regardless of:
+
+resolution
+
+aspect ratio
+
+provider
+
+model architecture
+
+The default grid is 12×12, but the protocol supports any N×N configuration.
+
+Each cell is referenced as:
 
 Código
+(row, column)
+Example:
+
+Código
+(3, 5) = row 3, column 5
+3.2 Regions
+A region is a set of grid cells.
+
+Example:
+
+Código
+region: [(3,4), (3,5), (4,4), (4,5)]
+Regions can be:
+
+rectangular
+
+irregular
+
+single‑cell
+
+multi‑cell
+
+3.3 Intent
+The user specifies the desired modification.
+
+Examples:
+
+“change the color to red”
+
+“remove the object”
+
+“add a reflection”
+
+“make it brighter”
+
+3.4 Constraints
+Optional rules that guide the model.
+
+Examples:
+
+“preserve lighting”
+
+“do not alter background”
+
+“keep proportions”
+
+3.5 Output Expectation
+Defines what the model should return.
+
+Examples:
+
+“only modify the region”
+
+“preserve global style”
+
+“maintain original resolution”
+
+4. Protocol Structure
+SGR instructions are transmitted as a structured payload.
+
+4.1 Payload Format (JSON)
+json
 {
-  "genre": "ambient",
-  "tempo": 60,
-  "mood": "calm",
-  "instruments": ["soft pads", "airy textures"],
-  "progression": "slow evolving",
-  "intensity_curve": [0.2, 0.3, 0.4, 0.5]
+  "protocol": "SGR-1.0",
+  "grid_size": 12,
+  "region": [[3,4], [3,5], [4,4], [4,5]],
+  "intent": "change the color to red",
+  "constraints": ["preserve lighting", "maintain texture"],
+  "output": "modify only the selected region"
 }
-Step 3 — Preview Generation
-The audio module generates a short preview (5–15 seconds) using the parameters.
+4.2 Provider-Agnostic Execution
+SGR does not dictate how the model performs the edit.
+It only defines what must be edited and where.
 
-Step 4 — User Feedback
-The user listens and provides corrections:
+Any provider can implement SGR:
 
-“Make it a bit brighter and increase the tempo slightly.”
+OpenAI
 
-Step 5 — LM Parameter Refinement
-The LM updates the parameters:
+Google
 
-Código
+xAI
+
+Midjourney
+
+Runway
+
+Adobe
+
+Meta
+
+Kling
+
+Luma
+
+5. Interaction Flow
+Step 1 — User selects region
+UI or API defines the grid cells.
+
+Step 2 — User defines intent
+Natural language or structured command.
+
+Step 3 — SGR builds the payload
+The protocol converts the instruction into a deterministic structure.
+
+Step 4 — Provider receives the payload
+The model interprets the instruction with explicit spatial context.
+
+Step 5 — Provider returns modified image
+Only the specified region is altered.
+
+6. Error Handling
+SGR defines standard error types:
+
+SGR-ERR-01: Invalid grid size
+
+SGR-ERR-02: Region out of bounds
+
+SGR-ERR-03: Empty region
+
+SGR-ERR-04: Unsupported provider
+
+SGR-ERR-05: Missing intent
+
+Errors must be returned in structured form:
+
+json
 {
-  "tempo": 68,
-  "brightness": "+15%",
-  "instrument_adjustments": {
-    "soft pads": "increase high frequencies"
-  }
+  "error": "SGR-ERR-02",
+  "message": "Region contains coordinates outside the grid."
 }
-Step 6 — Iteration Loop
-The orchestrator repeats Steps 3–5 until the user approves.
+7. Audio Extension (Phase 2)
+The audio protocol extends the same philosophy:
 
-Step 7 — Final Rendering
-Only after approval, the full audio track is generated.
+precise segmentation
 
-4. Orchestrator Logic (Pseudocode)
+deterministic control
+
+region‑based editing (temporal instead of spatial)
+
+Audio uses temporal grids instead of spatial grids.
+
+Example:
+
 Código
-initialize project
-receive user_description
+grid_size: 48 (48 segments per minute)
+region: [12–18]
+intent: "remove background noise"
+This keeps the multimodal standard unified.
 
-parameters = LM.generate_parameters(user_description)
+8. Video Extension (Phase 3)
+Video combines:
 
-loop:
-    preview = Audio.generate_preview(parameters)
-    send preview to user
-    
-    user_feedback = wait_for_user_feedback()
-    
-    if user_feedback == "approve":
-        break
-    
-    parameters = LM.refine_parameters(parameters, user_feedback)
+spatial grid (SGR)
 
-final_audio = Audio.render_full_track(parameters)
-deliver final_audio
-5. Parameter Structure
-Core Parameters
-genre
+temporal grid (audio protocol)
 
-tempo
+This creates a 3D grid:
 
-mood
+Código
+(x, y, t)
+Allowing frame‑accurate, region‑accurate editing.
 
-instrumentation
+9. Security & Validation
+SGR includes optional validation layers:
 
-progression
+region boundary checks
 
-intensity curve
+intent classification
 
-Refinement Parameters
-brightness
+provider compatibility checks
 
-warmth
+payload integrity hashing
 
-reverb amount
+These ensure safe and predictable execution.
 
-stereo width
+10. Versioning
+SGR uses semantic versioning:
 
-rhythmic density
+1.x — image protocol
 
-harmonic complexity
+2.x — audio extension
 
-Iteration Metadata
-iteration number
+3.x — video extension
 
-change history
+11. Licensing
+SGR is proprietary technology licensed by AIon Technology.
 
-preview length
+See the README for full licensing details.
 
-user approval state
+12. Contact
+For licensing, partnerships, or evaluation access:
 
-6. Design Principles
-6.1 Human‑in‑the‑Loop
-The AI does not evaluate audio.
-The human provides all auditory judgment.
-
-6.2 Lightweight Models
-The protocol is optimized for small LMs (e.g., Phi‑3 Mini).
-No audio analysis is required.
-
-6.3 Low Compute Cost
-Only previews are generated during iteration.
-Full rendering happens once.
-
-6.4 Multimodal Scalability
-The same structure applies to:
-
-video previews
-
-animation previews
-
-design previews
-
-simulation previews
-
-7. Example Interaction Transcript
-User:  
-“I want something darker and more atmospheric.”
-
-LM:  
-Updates parameters:
-mood = "dark atmospheric"  
-brightness = -20%  
-reverb = +30%
-
-Preview:  
-Generated and sent.
-
-User:  
-“Good, but slow it down.”
-
-LM:  
-tempo = tempo - 10
-
-Preview:  
-Generated again.
-
-User:  
-“Perfect. Render the full track.”
-
-8. Conclusion
-AIon-RT‑IAFS introduces a new pattern for human–AI creative collaboration.
-By combining natural‑language refinement with short previews and parameter‑based iteration, the protocol achieves:
-
-higher precision
-
-lower compute cost
-
-faster iteration
-
-better user experience
-
-This document defines the technical foundation for implementation and future expansion.
-
-© 2026 AIon Technology — All rights reserved.
+AIon Technology  
+DM via X: https://x.com/JesusRo46738821
+Email: jesus05rocio22@hotmail.com
