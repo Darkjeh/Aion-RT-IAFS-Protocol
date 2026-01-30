@@ -1,45 +1,38 @@
 AIon Technology — Multimodal Interaction Protocols Roadmap (2026)
 Overview
-AIon Technology develops next‑generation human–AI interaction protocols that enable fast iteration, high precision, and extremely low compute cost — without retraining models, without modifying neural networks, and without relying on large hardware clusters.
+AIon Technology is building the first universal multimodal interaction standard for AI systems.
+This standard enables precise, low‑compute, real‑time iteration across image, audio, and video without retraining models, modifying neural networks, or relying on heavy hardware.
 
-This roadmap unifies three core systems:
-
-RT‑IAFS — Real‑Time Iterative Audio Feedback System
+Core protocols:
 
 RT‑IVFS + SGR — Real‑Time Iterative Visual Feedback System + Spatial Grid Referencing
 
+RT‑IAFS — Real‑Time Iterative Audio Feedback System
+
 RT‑IVS — Real‑Time Iterative Video System (derived from the two previous protocols)
 
-Together, they form the foundation of a universal multimodal interaction standard.
+AIon Technology does not compete in models.
+AIon Technology competes in protocols.
 
-Phase 1 — Audio (RT‑IAFS) — COMPLETED
-Status: ✔ Completed
-Goal: Enable rapid iteration in AI‑assisted music creation without regenerating full tracks.
-Achievements
-Short audio previews (“time‑lapses”)
+Phase 1 — Image (RT‑IVFS + SGR) — IN DEVELOPMENT
+Goal
+Create a precise, region‑based visual editing system using Spatial Grid Referencing (SGR).
 
-Natural‑language corrections
+Why Phase 1?
+Easiest to build
 
-Parameter‑based refinement
+Easiest to test
 
-No full regeneration required
+Immediate visual impact
 
-Works with lightweight models (e.g., Phi‑3 Mini)
+Foundation for video
 
-Licensing proposal: 250,000 USD
+Zero dependencies
 
-Next Steps
-Publish full protocol documentation
+Enables mouse → grid → AI precision
 
-Integrate with PublicadorBot
-
-Release public demo (preview + iteration)
-
-Phase 2 — Image (RT‑IVFS + SGR) — IN DEVELOPMENT
-Status: 🚀 Active
-Goal: Achieve precise visual iteration without regenerating entire images.
 Key Innovation: Spatial Grid Referencing (SGR)
-A coordinate‑based grid overlay that allows the user to specify exact regions for modification.
+A coordinate‑based grid overlay (visible or invisible) that allows exact region selection.
 
 Examples:
 
@@ -47,38 +40,65 @@ Examples:
 
 “Remove the object in G7.”
 
-“Improve the expression in B2–C3.”
+“Enhance the eyes in B2.”
 
 Components
-Fast visual previews
+Grid generation
 
-Grid overlay understandable by both human and AI
+Mouse → cell detection
 
 Natural‑language corrections + coordinates
 
-Parameter‑based regional refinement
+Parameter‑based refinement
 
-Iteration without destroying correct elements
+Non‑destructive iteration
+
+JSON region mapping
 
 Next Steps
-Define standard visual parameters
+Publish grid module
 
-Publish grid specification
+Document SGR specification
 
-Add protocol documentation to GitHub
+Create demo image
 
-Prepare conceptual demo
+Integrate pointer‑hook module
+
+Phase 2 — Audio (RT‑IAFS) — COMPLETED
+Goal
+Enable rapid, precise iteration in AI‑assisted music creation without regenerating full tracks.
+
+Achievements
+Short previews
+
+Natural‑language corrections
+
+Parameter‑based refinement
+
+No full regeneration
+
+Works with lightweight models
+
+Licensing value: 250,000 USD
+
+Next Steps
+Publish protocol documentation
+
+Integrate with PublicadorBot
+
+Release public demo
 
 Phase 3 — Video (RT‑IVS) — PLANNED
-Status: 🧩 Derived from previous phases
-Goal: Real‑time iterative control over video without regenerating full clips.
+Goal
+Real‑time iterative control over video without regenerating full clips.
+
 How It Works
-Video = audio + image + time  
+Video = image + audio + time  
 By chaining the two existing protocols:
 
-RT‑IAFS → temporal iteration
-
 RT‑IVFS + SGR → spatial iteration
+
+RT‑IAFS → temporal iteration
 
 RT‑IVS = spatiotemporal iteration
 
@@ -87,35 +107,26 @@ Timeline segmentation
 
 Spatial grid per frame
 
-Short video previews (clips)
+Short video previews
 
-Natural‑language corrections:
+Natural‑language corrections
 
-“At second 3, cell D6, remove the object.”
-
-“Between 5–7s, increase brightness in the upper area.”
-
-Next Steps
-Define timeline grid
-
-Specify video parameters
-
-Integrate audio + image + time
-
-Draft technical documentation
+Region‑based editing
 
 Phase 4 — Commercial Integration
-Goal: Convert protocols into licensable products.
+Goal
+Convert protocols into licensable products.
+
 Actions
-Publish official GitHub repository
+Publish GitHub repository
 
 Launch announcement on X
 
-Prepare pitch for Microsoft and other big tech companies
+Prepare enterprise pitch
 
-Create a simple landing page
+Create landing page
 
-Document use cases and industry applications
+Document use cases
 
 Phase 5 — AIon Ecosystem (2026–2027)
 Planned Expansions
@@ -127,7 +138,7 @@ Real‑Time Simulation Feedback
 
 Lightweight hardware integration
 
-Developer SDK for external adoption
+Developer SDK
 
 Philosophy
 AIon Technology does not compete in models.
@@ -135,8 +146,8 @@ AIon Technology competes in protocols.
 
 Current Status
 Module	Status
-Audio (RT‑IAFS)	✔ Completed
 Image (RT‑IVFS + SGR)	🚀 In Development
+Audio (RT‑IAFS)	✔ Completed
 Video (RT‑IVS)	🧩 Planned
 Commercialization	⚡ Starting
-Ecosystem	🌐 Upcoming
+Ecosystem	🌐
