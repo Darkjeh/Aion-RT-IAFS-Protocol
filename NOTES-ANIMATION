@@ -1,0 +1,1 @@
+echo "Animación AIFS pospuesta por falta de GPU. Próximo paso: reactivación con ComfyUI cuando tengamos más recursos." > NOTES-ANIMATION.md
