@@ -1,0 +1,4 @@
+feat: initialize grid and spatial hook module in AIFS
+- Added base structure for visual/tactile region selection
+- Created initial documentation for modular protocol
+- Prepared environment for 1080p testing
